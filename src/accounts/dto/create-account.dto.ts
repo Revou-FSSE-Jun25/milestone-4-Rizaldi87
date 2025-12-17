@@ -13,4 +13,7 @@ export class CreateAccountDto {
 
   @IsString()
   currency: string;
+
+  @IsString()
+  type: string;
 }
