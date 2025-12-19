@@ -1,6 +1,7 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from 'generated/prisma/client';
+import { PrismaClient } from '@prisma/client';
+
 import pg from 'pg';
 
 @Injectable()
@@ -16,7 +17,11 @@ export class PrismaService
     super({ adapter });
   }
   async onModuleInit() {
-    await this.$connect();
+    try {
+      await this.$connect();
+    } catch (e) {
+      console.error('❌ Prisma connection error:', e);
+    }
   }
 
   async onModuleDestroy() {
