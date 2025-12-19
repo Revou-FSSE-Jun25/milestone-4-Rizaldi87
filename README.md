@@ -1,102 +1,141 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/0UWyaad3)
 
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Backend API Documentation
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📌 Overview
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a backend REST API built with **NestJS**, featuring:
 
-## Description
+- JWT Bearer Authentication
+- Role-based authorization (ADMIN / USER)
+- Account & User management
+- Unit testing with Jest
+- API documentation using **Postman Collection**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The API is designed with security best practices, ensuring user identity is derived from JWT tokens and not client input.
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 🔐 Authentication
+
+The API uses **JWT Bearer Token Authentication**.
+
+### How to authenticate
+
+1. Login using the authentication endpoint
+2. Copy the returned `access_token`
+3. Use it in requests via HTTP header:
+
+```
+Authorization: Bearer <access_token>
 ```
 
-## Compile and run the project
+All secured endpoints require a valid JWT token.
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## 📂 Postman API Documentation
 
-# production mode
-$ npm run start:prod
+All API endpoints, request bodies, and responses are fully documented and can be tested via the Postman collection below:
+
+🔗 **Postman Collection (Public)**
+[https://web.postman.co/workspace/My-Workspace~9429aa5f-717d-47bc-8da1-3eff28e38c5c?collection=38143757-5dd2df5e-4bb7-4425-978b-446920550df4&target=embed](https://web.postman.co/workspace/My-Workspace~9429aa5f-717d-47bc-8da1-3eff28e38c5c?collection=38143757-5dd2df5e-4bb7-4425-978b-446920550df4&target=embed)
+
+The Postman collection includes:
+
+- Authentication endpoints
+- User endpoints
+- Account endpoints
+- JWT Bearer token configuration
+- Example requests and responses
+
+---
+
+## Users API
+
+### Get Current User Profile
+
+```
+GET /users/profile
 ```
 
-## Run tests
+**Auth:** Bearer Token (JWT)
 
-```bash
-# unit tests
-$ npm run test
+Returns the currently authenticated user's data derived from the JWT payload.
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
-$ npm run test:cov
+### Update Current User Profile
+
+```
+PATCH /users/profile
 ```
 
-## Deployment
+**Auth:** Bearer Token (JWT)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Updates the authenticated user's profile information. The user ID is taken from the JWT and cannot be overridden by the client.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+### Get All Users (ADMIN only)
+
+```
+GET /users
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**Auth:** Bearer Token (JWT)
+**Role Required:** ADMIN
 
-## Resources
+Returns a list of all users. Access is restricted to users with the ADMIN role.
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Get User by ID
 
-## Support
+```
+GET /users/:id
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Auth:** Bearer Token (JWT)
+**Role Required:** ADMIN or USER
 
-## Stay in touch
+Returns detailed information about a specific user.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## Testing
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project uses **Jest** for unit testing.
 
-access at [this url](https://chatgpt.com/c/69455924-7efc-8321-a2db-86f837f68894)
+### Covered test scenarios
+
+- Authentication success and failure
+- Unauthorized access attempts
+- Role-based access control
+- Core business logic validation
+
+## Key Design Decisions
+
+- JWT payload is the single source of truth for user identity
+- Role-based guards prevent unauthorized access
+- DTO validation ensures clean and predictable inputs
+- Postman is used as the primary API documentation tool
+
+---
+
+## 🚀 Getting Started
+
+```bash
+npm install
+npm run start:dev
+```
+
+Server will run at:
+
+[this url](https://chatgpt.com/c/69455924-7efc-8321-a2db-86f837f68894)
+
+---
+
+## 📄 License
+
+This project is provided for evaluation and learning purposes.
