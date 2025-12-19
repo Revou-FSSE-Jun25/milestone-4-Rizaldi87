@@ -38,8 +38,8 @@ All secured endpoints require a valid JWT token.
 
 All API endpoints, request bodies, and responses are fully documented and can be tested via the Postman collection below:
 
-🔗 **Postman Collection (Public)**
-[https://web.postman.co/workspace/My-Workspace~9429aa5f-717d-47bc-8da1-3eff28e38c5c?collection=38143757-5dd2df5e-4bb7-4425-978b-446920550df4&target=embed](https://web.postman.co/workspace/My-Workspace~9429aa5f-717d-47bc-8da1-3eff28e38c5c?collection=38143757-5dd2df5e-4bb7-4425-978b-446920550df4&target=embed)
+🔗 **Postman**
+https://documenter.getpostman.com/view/38143757/2sB3dWqRoN
 
 The Postman collection includes:
 
