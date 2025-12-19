@@ -132,7 +132,7 @@ npm run start:dev
 
 Server will run at:
 
-[this url](https://chatgpt.com/c/69455924-7efc-8321-a2db-86f837f68894)
+[this url](milestone-4-rizaldi87-production.up.railway.app)
 
 ---
 
