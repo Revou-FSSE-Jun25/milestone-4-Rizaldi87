@@ -132,7 +132,7 @@ npm run start:dev
 
 Server will run at:
 
-[this url](milestone-4-rizaldi87-production.up.railway.app)
+[this url](https://milestone-4-rizaldi87-production.up.railway.app/)
 
 ---
 
