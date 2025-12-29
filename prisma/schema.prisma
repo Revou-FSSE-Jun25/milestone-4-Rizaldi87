@@ -44,7 +44,7 @@ model Account{
   id        Int           @id @default(autoincrement())
   accountNumber String @unique
   userId    Int
-  balance   Decimal       @default(0)
+  balance   Decimal       @db.Decimal(15, 2) @default(0.00)
   type      AccountType        // SAVINGS, CHECKING, etc
   user      User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
@@ -59,7 +59,7 @@ model Transaction {
   id            Int       @id @default(autoincrement())
   accountId     Int
   targetAccountId Int?
-  amount        Decimal
+  amount        Decimal     @db.Decimal(15, 2)
   type          TransactionType    // DEPOSIT, WITHDRAW, TRANSFER
   account       Account   @relation(fields: [accountId], references: [id])
   createdAt     DateTime  @default(now())
