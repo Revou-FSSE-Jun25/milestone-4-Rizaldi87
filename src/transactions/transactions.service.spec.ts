@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TransactionsService } from './transactions.service';
 import { TransactionsRepository } from './transactions.repository';
+import { BadRequestException } from '@nestjs/common';
 
 describe('TransactionsService', () => {
   let service: TransactionsService;
@@ -93,5 +94,45 @@ describe('TransactionsService', () => {
 
     expect(repo.findOneByUser).toHaveBeenCalledWith(1, 1);
     expect(result).toEqual(transaction);
+  });
+
+  //withdraw - insufficient balance & unauthorized access
+  it('should throw error when balance is insufficient', async () => {
+    repo.withdraw.mockRejectedValue(
+      new BadRequestException('Insufficient balance'),
+    );
+
+    await expect(service.withdraw(1, 10, 5000)).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
+  it('should throw error when user is not the owner of the account', async () => {
+    repo.withdraw.mockRejectedValue(
+      new BadRequestException('unauthorized access'),
+    );
+    await expect(service.withdraw(2, 10, 500)).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
+  //transfer - insufficient balance & unauthorized access
+  it('should throw error when balance is insufficient for transfer', async () => {
+    repo.tranfer.mockRejectedValue(
+      new BadRequestException('Insufficient balance'),
+    );
+
+    await expect(service.tranfer(1, 10, 5000, 20)).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
+  it('should throw error when user is not the owner of the account', async () => {
+    repo.tranfer.mockRejectedValue(
+      new BadRequestException('unauthorized access'),
+    );
+    await expect(service.tranfer(2, 10, 500, 20)).rejects.toThrow(
+      BadRequestException,
+    );
   });
 });

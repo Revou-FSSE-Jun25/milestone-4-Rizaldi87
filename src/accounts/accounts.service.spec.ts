@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AccountsService } from './accounts.service';
 import { AccountRepository } from './accounts.repository';
 import { CreateAccountDto } from './dto/create-account.dto';
+import { BadRequestException } from '@nestjs/common';
 
 describe('AccountsService', () => {
   let service: AccountsService;
@@ -58,6 +59,20 @@ describe('AccountsService', () => {
     expect(repo.createUserAccount).toHaveBeenCalledWith(userId, dto);
   });
 
+  it('should not create account if account number already exists', async () => {
+    repo.createUserAccount.mockRejectedValue(
+      new BadRequestException('Account number already exists'),
+    );
+
+    await expect(
+      service.create(1, {
+        accountNumber: '123456',
+        balance: 1000,
+        type: 'savings',
+      } as CreateAccountDto),
+    ).rejects.toThrow(BadRequestException);
+  });
+
   it('should return all accounts by user', async () => {
     const userId = 1;
     const accounts = [
@@ -99,6 +114,16 @@ describe('AccountsService', () => {
     expect(repo.updateUserAccount).toHaveBeenCalledWith(userId, accountId, dto);
   });
 
+  it('should not update account if unauthorized', async () => {
+    repo.updateUserAccount.mockRejectedValue(
+      new BadRequestException('Unauthorized access'),
+    );
+
+    await expect(service.updateByUser(2, 1, { balance: 2000 })).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
   it('should remove an account by user', async () => {
     const userId = 1;
     const accountId = 2;
@@ -109,5 +134,15 @@ describe('AccountsService', () => {
 
     expect(result).toEqual({ id: accountId });
     expect(repo.removeUserAccount).toHaveBeenCalledWith(userId, accountId);
+  });
+
+  it('should not remove account if unauthorized', async () => {
+    repo.removeUserAccount.mockRejectedValue(
+      new BadRequestException('Unauthorized access'),
+    );
+
+    await expect(service.removeByUser(2, 1)).rejects.toThrow(
+      BadRequestException,
+    );
   });
 });
