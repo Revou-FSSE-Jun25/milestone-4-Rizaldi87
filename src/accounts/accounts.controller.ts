@@ -15,7 +15,6 @@ import { UpdateAccountDto } from './dto/update-account.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import {
   ApiAcceptedResponse,
-  ApiAmbiguousResponse,
   ApiBadRequestResponse,
   ApiCreatedResponse,
   ApiOperation,
