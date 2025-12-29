@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { UsersRepository } from './users.repository';
+import { NotFoundException } from '@nestjs/common';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -69,7 +70,9 @@ describe('UsersService', () => {
   });
 
   it('should throw NotFoundException if user not found', async () => {
-    repo.findOne.mockResolvedValue(null);
+    repo.findOne.mockRejectedValue(
+      new NotFoundException('User with ID 99 not found'),
+    );
 
     await expect(service.findOne(99)).rejects.toThrow(NotFoundException);
   });
