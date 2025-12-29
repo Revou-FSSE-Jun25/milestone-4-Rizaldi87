@@ -21,7 +21,12 @@ export class AccountRepository {
   }
 
   async update(id: number, dto: UpdateAccountDto) {
-    return await this.prisma.account.update({ where: { id }, data: dto });
+    // Hapus userId dari dto karena tidak boleh diubah
+    const { userId, ...updateData } = dto;
+    return await this.prisma.account.update({
+      where: { id },
+      data: updateData,
+    });
   }
 
   async remove(id: number) {
@@ -65,9 +70,13 @@ export class AccountRepository {
     accountId: number,
     dto: UpdateAccountDto,
   ) {
+    // FIX 1: Ganti nama destructured variable untuk avoid conflict
+    const { userId: dtoUserId, ...updateData } = dto;
+
+    // FIX 2: Gunakan accountId bukan id
     return await this.prisma.account.update({
       where: { id: accountId },
-      data: dto,
+      data: updateData,
     });
   }
 

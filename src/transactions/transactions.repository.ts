@@ -102,7 +102,7 @@ export class TransactionsRepository {
         accountId,
         targetAccountId,
         amount: new Decimal(amount),
-        type: 'TRANFER',
+        type: 'TRANSFER',
       },
     });
   }

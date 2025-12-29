@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { AccountType } from '@prisma/client';
 import { IsNumber, IsString, Length } from 'class-validator';
 
 export class CreateAccountDto {
@@ -20,5 +21,5 @@ export class CreateAccountDto {
 
   @ApiProperty({ example: 'savings', description: 'Type of the account' })
   @IsString()
-  type: string;
+  type: AccountType;
 }
