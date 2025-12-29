@@ -2,7 +2,7 @@
 
 # Backend API Documentation
 
-## 📌 Overview
+## Overview
 
 This project is a backend REST API built with **NestJS**, featuring:
 
@@ -10,13 +10,13 @@ This project is a backend REST API built with **NestJS**, featuring:
 - Role-based authorization (ADMIN / USER)
 - Account & User management
 - Unit testing with Jest
-- API documentation using **Postman Collection**
+- API documentation using **Swagger**
 
 The API is designed with security best practices, ensuring user identity is derived from JWT tokens and not client input.
 
 ---
 
-## 🔐 Authentication
+## Authentication
 
 The API uses **JWT Bearer Token Authentication**.
 
@@ -34,14 +34,14 @@ All secured endpoints require a valid JWT token.
 
 ---
 
-## 📂 Postman API Documentation
+## Swagger API Documentation
 
-All API endpoints, request bodies, and responses are fully documented and can be tested via the Postman collection below:
+All API endpoints, request bodies, and responses are fully documented and can be tested via Swagger below:
 
-🔗 **Postman**
-https://documenter.getpostman.com/view/38143757/2sB3dWqRoN
+🔗 **Swagger**
+https://milestone-4-rizaldi87-production.up.railway.app/api
 
-The Postman collection includes:
+The Swagger collection includes:
 
 - Authentication endpoints
 - User endpoints
@@ -119,7 +119,7 @@ This project uses **Jest** for unit testing.
 - JWT payload is the single source of truth for user identity
 - Role-based guards prevent unauthorized access
 - DTO validation ensures clean and predictable inputs
-- Postman is used as the primary API documentation tool
+- Swagger is used as the primary API documentation tool
 
 ---
 
