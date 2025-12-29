@@ -19,6 +19,16 @@ enum Role {
   ADMIN
 }
 
+enum AccountType {
+  SAVINGS
+  CHECKING
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAW
+  TRANSFER
+}
 model User{
    id        Int       @id @default(autoincrement())
   email     String    @unique
@@ -35,7 +45,7 @@ model Account{
   accountNumber String @unique
   userId    Int
   balance   Decimal       @default(0)
-  type      String        // SAVINGS, CHECKING, etc
+  type      AccountType        // SAVINGS, CHECKING, etc
   user      User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
 
@@ -50,7 +60,7 @@ model Transaction {
   accountId     Int
   targetAccountId Int?
   amount        Decimal
-  type          String    // DEPOSIT, WITHDRAW, TRANSFER
+  type          TransactionType    // DEPOSIT, WITHDRAW, TRANSFER
   account       Account   @relation(fields: [accountId], references: [id])
   createdAt     DateTime  @default(now())
 
